@@ -1,0 +1,45 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "Hausarbeit",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf node_modules && rm -rf blog/dist",
+    "lint": "semistandard ",
+    "format": "semistandard blog/client/js/**/*.js && semistandard server/server.js",
+    "build": "npm run debug && npm run css:min && npm run js:min",
+    "predebug": "npm run lint",
+    "debug": "npm run html && npm run css && npm run js",
+    "html": "mkdir -p blog/dist && cp blog/client/index.html blog/dist",
+    "css": "mkdir -p blog/dist && cp blog/client/styles/style.less blog/dist/style.css",
+    "css:min": "lessc --clean-css blog/dist/style.css blog/dist/style.css",
+    "js": "mkdir -p blog/dist && browserify blog/client/js/main.js -o blog/dist/bundle.js",
+    "js:min": "terser blog/dist/bundle.js -c -m --comments=false -o blog/dist/bundle.js",
+    "start": "nodemon ./server/server.js"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "Stefan und Tim",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.17.1",
+    "formidable": "^1.2.2",
+    "leaflet": "^1.6.0",
+    "less": "^3.11.3",
+    "less-plugin-clean-css": "^1.5.1",
+    "lessc": "^1.0.2",
+    "terser": "^4.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "browserify": "^16.5.1",
+    "eslint": "^7.2.0",
+    "semistandard": "^14.2.0"
+  },
+  "semistandard": {
+    "ignore": [
+      "blog/dist/bundle.js"
+    ]
+  }
+}
